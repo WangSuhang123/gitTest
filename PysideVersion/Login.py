@@ -1,9 +1,9 @@
 #使用LoginUI.py里面的pyqt5界面进行登录功能的开发，然后将其与Login.py绑定，实现登录功能。登录成功后，将会进入主界面。
 import sys
-from PyQt5 import QtWidgets
+from PySide6 import QtWidgets
 import MysqlConnect
-from LoginUI import Ui_Login
-from main import MainWindow
+from UI_Login import Ui_Login
+from Main import MainWindow
 from Regist import Registration
 
 class Login(QtWidgets.QMainWindow, Ui_Login):
@@ -35,11 +35,11 @@ class Login(QtWidgets.QMainWindow, Ui_Login):
             self.close()
             # 打开主界面
             self.MainWindow.show()
+
         else:
             # 登录失败，弹出提示框
             print("登录失败！")
-            self.error_message = QtWidgets.QMessageBox()
-            self.error_message.setIcon(QtWidgets.QMessageBox.Warning)
+            QtWidgets.QMessageBox.warning(self, "警告", "账号或密码错误！", QtWidgets.QMessageBox.Yes)
 
     def Register(self):
         #关闭当前登录界面
@@ -52,4 +52,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     login = Login()
     login.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

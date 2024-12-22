@@ -1,7 +1,7 @@
 #使用registration.py里面的oyqt5界面进行注册功能的开发
 import MysqlConnect
-from registration import Ui_Registration
-from PyQt5 import QtWidgets
+from UI_Registration import Ui_Registration
+from PySide6 import QtWidgets
 import sys
 
 class Registration(QtWidgets.QMainWindow, Ui_Registration):
@@ -9,7 +9,6 @@ class Registration(QtWidgets.QMainWindow, Ui_Registration):
         super(Registration, self).__init__(parent)
         self.setupUi(self)
         self.pushButton.clicked.connect(self.register)
-
 
     def register(self):
         # 注册功能的实现
@@ -45,6 +44,7 @@ class Registration(QtWidgets.QMainWindow, Ui_Registration):
             self.login = Login()
             self.login.show()
             print("注册成功！打开页面成功")
+
 
         except:
             QtWidgets.QMessageBox.warning(self, "警告", "注册失败！")

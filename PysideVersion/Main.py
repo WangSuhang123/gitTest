@@ -1,7 +1,9 @@
 # 导入必要模块
-from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtGui import QPixmap
-from testmuyu import Ui_MainWindow  # 导入生成的 UI 类
+from datetime import time
+
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtGui import QPixmap
+from UI_Main import Ui_MainWindow  # 导入生成的 UI 类
 
 
 # 定义主窗口类
@@ -16,6 +18,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.UploadImage.clicked.connect(self.uploadImage)
         self.HitOnes.clicked.connect(self.hitOnes)
         self.MakeZero.clicked.connect(self.makeZero)
+        self.quitButton.clicked.connect(self.quit)
+        self.screenshotButton.clicked.connect(self.screenshot)
 
     # 上传图片功能
     def uploadImage(self):
@@ -35,6 +39,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.num = 0
         self.numLabel.setText(str(self.num))
 
+    #退出到登录页面
+    def quit(self):
+        self.close()
+        from Login import Login
+        self.login = Login()
+        self.login.show()
+
+    # 截屏功能
+    def screenshot(self):
+        #获取整个屏幕的截图
+        screenshot = QtWidgets.QApplication.primaryScreen().grabWindow(0)
+
+        # Use time module to generate the timestamp
+        #使用datetime获取当前时间戳
+        import datetime
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        # Save screenshot with the timestamped filename
+        screenshot.save(f'./screenshots/{timestamp}.png')
+
+        # Show success message
+        QtWidgets.QMessageBox.information(self, '提示', '截屏成功！')
+
+
 
 # 主程序入口
 if __name__ == '__main__':
@@ -43,4 +70,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     mainWindow = MainWindow()
     mainWindow.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
